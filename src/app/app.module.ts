@@ -1,18 +1,37 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
+import { HttpClientModule} from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
+import { JSONPlaceholderService} from './services/jsonplaceholder.service';
+import { EditComponent } from './edit/edit.component';
+import { RouterModule} from '@angular/router';
+import { WelcomeComponent } from './welcome/welcome.component';
+import { AddComponent } from './add/add.component';
+import { DetailsComponent } from './details/details.component'
+import { from } from 'rxjs';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    EditComponent,
+    WelcomeComponent,
+    AddComponent,
+    DetailsComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    HttpClientModule,
+    RouterModule.forRoot([
+      { path: '', component: WelcomeComponent},
+      { path: 'edit/:id', component: EditComponent},
+      { path: 'add' , component:AddComponent},
+      { path: 'details/:id' , component: DetailsComponent}
+    ]),
+    FormsModule
   ],
-  providers: [],
+  providers: [JSONPlaceholderService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

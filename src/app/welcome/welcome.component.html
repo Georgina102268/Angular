@@ -1,0 +1,12 @@
+
+  <div class="content" role="main">
+  <div>
+    <button><a [routerLink]="['/add']">Add New</a></button>
+  </div>
+  <div *ngFor="let image of data" >
+    <a [routerLink]="['/details',image.id]"><img src="{{image.thumbnailUrl}}"></a>
+    <button (click)="deleteData(image.id)">Delete</button>
+    <a [routerLink]="['/edit',image.id]"><button>Edit</button></a>
+  </div>
+  </div>
+  
