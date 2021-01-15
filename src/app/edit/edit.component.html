@@ -1,7 +1,7 @@
 <div class="content" role="main">
-<p>Title<input [(ngModel)]='title' type="text" name="title" ></p>
-<p>URL<input [(ngModel)]='url' type="text" name="url"></p>
-<p>Thumbnail URL<input [(ngModel)]='thumbnailUrl' type="text" name="thumbnailUrl"></p>
-<button (click)="update()">Update</button>
-<a [routerLink]="['']"><button>Back</button></a>
+<p class="text-primary">Title<input [(ngModel)]='title' type="text" name="title" ></p>
+<p class="text-primary">URL<input [(ngModel)]='url' type="text" name="url"></p>
+<p class="text-primary">Thumbnail URL<input [(ngModel)]='thumbnailUrl' type="text" name="thumbnailUrl"></p>
+<button class='btn btn-info mr-2' (click)="update()">Update</button>
+<a [routerLink]="['']"><button class='btn btn-info mr-2'>Back</button></a>
 </div>

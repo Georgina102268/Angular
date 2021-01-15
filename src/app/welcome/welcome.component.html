@@ -1,12 +1,13 @@
 
   <div class="content" role="main">
   <div>
-    <button><a [routerLink]="['/add']">Add New</a></button>
+    <a [routerLink]="['/add']"><button class='btn btn-info'>Add New</button></a><br><br>
   </div>
   <div *ngFor="let image of data | paginate: {id: 'listing_pagination', itemsPerPage: 100, currentPage: page, totalItems: totalRecords}">
+    <br>
     <a [routerLink]="['/details',image.id]"><img src="{{image.thumbnailUrl}}"></a>
-    <button (click)="deleteData(image.id)">Delete</button>
-    <a [routerLink]="['/edit',image.id]"><button>Edit</button></a>
+    <button class='btn btn-info mr-2' (click)="deleteData(image.id)">Delete</button>
+    <a [routerLink]="['/edit',image.id]"><button class='btn btn-info'>Edit</button></a>
   </div>
   <div>
     <pagination-controls id='listing_pagination' maxSize="5" directionLinks="true" (pageChange)="page = $event"></pagination-controls>

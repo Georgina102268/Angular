@@ -23,12 +23,11 @@ export class WelcomeComponent implements OnInit, OnDestroy{
     this.subscribe.unsubscribe();
   }
 gotoDetails(id:number){
-  //[routerLink]="['/details',image.id]"
   this.router.navigate(['/details/'+id])
 }
   getDataAPI(){
     this.subscribe=this.JSONPlaceholder.getData().subscribe((data) => {
-      console.log("aaaaaa:", data)
+      console.log(data)
       this.data=data
       this.totalRecords = this.data.length
       console.log("totalRecords:", this.totalRecords)
