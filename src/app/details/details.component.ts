@@ -20,7 +20,10 @@ export class DetailsComponent implements OnInit , OnDestroy{
     console.log('Details Constructor '+this.id);
    }
   ngOnDestroy(): void {
-    this.subscribe.unsubscribe();
+    if (this.subscribe){      
+      this.subscribe.unsubscribe();
+      this.subscribe=null;
+    }
   }
 
    ngOnInit(){

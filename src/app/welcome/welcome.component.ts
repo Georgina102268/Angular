@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { JSONPlaceholderService } from 'src/app/services/jsonplaceholder.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -13,41 +13,69 @@ export class WelcomeComponent implements OnInit, OnDestroy{
   title = 'AngularQuiz';
   data:Array<any>;
   totalRecords: Number;
-  page: Number = 1;
+  page: number = 1;
   subscribe: Subscription;
-  constructor(private JSONPlaceholder: JSONPlaceholderService ,  private router: Router){
-    this.data=new Array<any>();
-    this.getDataAPI();
+  pageSubscribe: Subscription;
+  constructor(private JSONPlaceholder: JSONPlaceholderService ,  private router: Router,
+    private route: ActivatedRoute){
+    this.data=new Array<any>();    
   }
   ngOnDestroy(): void {
-    this.subscribe.unsubscribe();
+    if (this.subscribe){      
+      this.subscribe.unsubscribe();
+      this.subscribe=null;
+    }
+    if(this.pageSubscribe){
+      this.pageSubscribe.unsubscribe();
+      this.pageSubscribe=null;
+    }
   }
+  
 gotoDetails(id:number){
   this.router.navigate(['/details/'+id])
 }
   getDataAPI(){
-    this.subscribe=this.JSONPlaceholder.getData().subscribe((data) => {
-      console.log(data)
-      this.data=data
-      this.totalRecords = this.data.length
-      console.log("totalRecords:", this.totalRecords)
+    if (this.subscribe){      
+      this.subscribe.unsubscribe();
+      this.subscribe = null;
+    }
+
+    this.router.navigate(['.'], { relativeTo: this.route, queryParams: { page: this.page }});
+
+    this.subscribe=this.JSONPlaceholder.getData(this.page).subscribe((data: any) => {
+      this.data=data.data;
+      this.totalRecords = data.totalRecords;
     });
   }
 
-  
-  ngOnInit() {
-    this.data = Array(150).fill(0).map((x, i) => ({ id: (i + 1), name: `Item ${i + 1}`}));
-}
+  ngOnInit(){
+    this.pageSubscribe=this.route.queryParams.subscribe(params => {
+      let paramPage = params.page;
+      if (paramPage){
+        this.page = paramPage;
+      }      
+  });    
+  this.getDataAPI();
+  }
 
-onChangePage(pageOfItems: Array<any>) {
+onChangePage(pageNumber: number) {
   // update current page of items
-  this.data = pageOfItems;
+  this.page = pageNumber;
+  this.getDataAPI();
 }
 
   deleteData(id: number){
+    if (this.subscribe){      
+      this.subscribe.unsubscribe();
+      this.subscribe = null;
+    }
     this.subscribe=this.JSONPlaceholder.deleteData(id).subscribe(()=>{
       console.log('Deleted');
     });
+  }
+
+  goToEdit(page: number, id:number){
+    this.router.navigate(['/edit/'+id], { relativeTo: this.route, queryParams: { page: page }});
   }
 
 }
