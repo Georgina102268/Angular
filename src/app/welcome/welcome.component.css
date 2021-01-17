@@ -19,12 +19,12 @@
   float: none;
   margin-bottom: 10px;
 }
-.vertical-center {
-  margin: 0;
-  position: absolute;
-  top: 50%;
-  -ms-transform: translateY(-50%);
-  transform: translateY(-50%);
+.card-header{
+  white-space: nowrap;
+  max-height:40px;
+  overflow:hidden !important;
+  text-overflow: ellipsis;
 }
+
 
   

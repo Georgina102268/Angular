@@ -70,19 +70,18 @@ onChangePage(pageNumber: number) {
       this.subscribe = null;
     }
     this.subscribe=this.JSONPlaceholder.deleteData(id).subscribe(()=>{
-      console.log('Deleted');
     });
   }
 
-  goToEdit(page: number, id:number){
-    this.router.navigate(['/edit/'+id], { relativeTo: this.route, queryParams: { page: page }});
+  goToEdit( id:number){
+    this.router.navigate(['/edit/'+id], { relativeTo: this.route, queryParams: { page: this.page }});
   }
 
-  goToAdd(page: number){
-    this.router.navigate(['/add'], { relativeTo: this.route, queryParams: { page: page }});
+  goToAdd(){
+    this.router.navigate(['/add'], { relativeTo: this.route, queryParams: { page: this.page }});
   }
   
-  goToDetails(page: number, id:number){
-    this.router.navigate(['/details/'+id], { relativeTo: this.route, queryParams: { page: page }});
+  goToDetails(id:number){
+    this.router.navigate(['/details/'+id], { relativeTo: this.route, queryParams: { page: this.page }});
   }
 }

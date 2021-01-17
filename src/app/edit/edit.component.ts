@@ -54,11 +54,12 @@ export class EditComponent implements OnInit, OnDestroy{
       this.subscribe=null;
     }
     this.subscribe=this.JSONPlaceholder.editData(this.albumID,this.id,this.title,this.url,this.thumbnailUrl).subscribe();
+    this.goBack();
     return this.subscribe;
   }
 
-  goBack(page: number){
-    this.router.navigate([''], { relativeTo: this.route, queryParams: { page: page }});
+  goBack(){
+    this.router.navigate([''], { relativeTo: this.route, queryParams: { page: this.page }});
   }
 
 }

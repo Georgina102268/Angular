@@ -47,8 +47,9 @@ export class AddComponent implements OnInit, OnDestroy {
     }
    this.subscribe=this.JSONPlaceholder.addData(this.albumID,this.title,this.url,this.thumbnailUrl).subscribe((x) => {
    });
+   this.goBack();
   }
-  goBack(page: number){
-    this.router.navigate([''], { relativeTo: this.route, queryParams: { page: page }});
+  goBack(){
+    this.router.navigate([''], { relativeTo: this.route, queryParams: { page: this.page }});
   }
 }

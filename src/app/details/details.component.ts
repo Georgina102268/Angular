@@ -48,8 +48,8 @@ export class DetailsComponent implements OnInit , OnDestroy{
       this.thumbnailUrl=x.thumbnailUrl;
     })
    }
-   goBack(page: number){
-    this.router.navigate([''], { relativeTo: this.route, queryParams: { page: page }});
+   goBack(){
+    this.router.navigate([''], { relativeTo: this.route, queryParams: { page: this.page }});
   }
 
 }
