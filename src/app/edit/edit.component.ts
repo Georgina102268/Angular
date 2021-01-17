@@ -9,57 +9,58 @@ import { Subscription } from 'rxjs';
   templateUrl: './edit.component.html',
   styleUrls: ['./edit.component.css']
 })
-export class EditComponent implements OnInit, OnDestroy{
+export class EditComponent implements OnInit, OnDestroy {
   id: number;
   albumID: number;
-  title:String;
+  title: String;
   url: String;
   thumbnailUrl: String;
   item: any;
   subscribe: Subscription;
   pageSubscribe: Subscription;
   page: number;
-  constructor(private JSONPlaceholder: JSONPlaceholderService, private route: ActivatedRoute,  private router: Router) {
-   }
+  constructor(private JSONPlaceholder: JSONPlaceholderService, private route: ActivatedRoute, private router: Router) {
+  }
   ngOnDestroy(): void {
-    if (this.subscribe){      
+    if (this.subscribe) {
       this.subscribe.unsubscribe();
-      this.subscribe=null;
+      this.subscribe = null;
     }
-    if(this.pageSubscribe){
+    if (this.pageSubscribe) {
       this.pageSubscribe.unsubscribe();
-      this.pageSubscribe=null;
+      this.pageSubscribe = null;
     }
   }
-   ngOnInit(){
-    this.id=+this.route.snapshot.paramMap.get('id');
-    this.subscribe=this.JSONPlaceholder.getItem(this.id).subscribe((x)=>{
-      this.item=x;
-      this.albumID=x.albumId;
-      this.title=x.title;
-      this.url=x.url;
-      this.thumbnailUrl=x.thumbnailUrl;
+  ngOnInit() {
+    this.id = +this.route.snapshot.paramMap.get('id');
+    this.subscribe = this.JSONPlaceholder.getItem(this.id).subscribe((x) => {
+      this.item = x;
+      this.albumID = x.albumId;
+      this.title = x.title;
+      this.url = x.url;
+      this.thumbnailUrl = x.thumbnailUrl;
     });
-    this.pageSubscribe=this.route.queryParams.subscribe(params => {
+    this.pageSubscribe = this.route.queryParams.subscribe(params => {
       let paramPage = params.page;
-      if (paramPage){
+      if (paramPage) {
         this.page = paramPage;
-      }      
-  });
-   }
+      }
+    });
+  }
 
-  update(){
-    if (this.subscribe){      
+  update() {
+    if (this.subscribe) {
       this.subscribe.unsubscribe();
-      this.subscribe=null;
+      this.subscribe = null;
     }
-    this.subscribe=this.JSONPlaceholder.editData(this.albumID,this.id,this.title,this.url,this.thumbnailUrl).subscribe();
-    this.goBack();
+    this.subscribe = this.JSONPlaceholder.editData(this.albumID, this.id, this.title, this.url, this.thumbnailUrl).subscribe(x => {
+      this.goBack();
+    });
     return this.subscribe;
   }
 
-  goBack(){
-    this.router.navigate([''], { relativeTo: this.route, queryParams: { page: this.page }});
+  goBack() {
+    this.router.navigate([''], { relativeTo: this.route, queryParams: { page: this.page } });
   }
 
 }

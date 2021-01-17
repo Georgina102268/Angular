@@ -7,46 +7,46 @@ import { map } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class JSONPlaceholderService {
-   url= "http://jsonplaceholder.typicode.com/photos";
+  url = "http://jsonplaceholder.typicode.com/photos";
   constructor(private http: HttpClient) {
 
-   }
+  }
 
   getData(page: number): Observable<any> {
-    return this.http.get<any>(`http://jsonplaceholder.typicode.com/photos?_page=${page}&_limit=10`, {observe: 'response'})
-    .pipe(map(response => {
-      return {totalRecords: response.headers.get('X-Total-Count'), data: response.body };
-    }));
+    return this.http.get<any>(`http://jsonplaceholder.typicode.com/photos?_page=${page}&_limit=10`, { observe: 'response' })
+      .pipe(map(response => {
+        return { totalRecords: response.headers.get('X-Total-Count'), data: response.body };
+      }));
   }
 
   getItem(id: number): Observable<any> {
-    return this.http.get<any>(this.url+'/'+id);
+    return this.http.get<any>(this.url + '/' + id);
   }
 
-  deleteData(id: number): Observable<any>{
-      return this.http.delete(this.url+'/'+id);
+  deleteData(id: number): Observable<any> {
+    return this.http.delete(this.url + '/' + id);
   }
 
-  addData(albumId:number, title: String, url: String, thumbnailUrl: String): Observable<any>{
-      let newData=
-        {
-          "albumId": albumId,
-          "title": title,
-          "url": url,
-          "thumbnailUrl": thumbnailUrl
-        };
-        return this.http.post(this.url,newData);
+  addData(albumId: number, title: String, url: String, thumbnailUrl: String): Observable<any> {
+    let newData =
+    {
+      "albumId": albumId,
+      "title": title,
+      "url": url,
+      "thumbnailUrl": thumbnailUrl
+    };
+    return this.http.post(this.url, newData);
   }
 
-  editData(albumId:number, id: number,title: String, url: String, thumbnailUrl: String): Observable<any>{
-    let newData=
-        {
-          "albumId": albumId,
-          "id": id,
-          "title": title,
-          "url": url,
-          "thumbnailUrl": thumbnailUrl
-        };
-        return this.http.put(url+'/'+id,newData);
+  editData(albumId: number, id: number, title: String, url: String, thumbnailUrl: String): Observable<any> {
+    let newData =
+    {
+      "albumId": albumId,
+      "id": id,
+      "title": title,
+      "url": url,
+      "thumbnailUrl": thumbnailUrl
+    };
+    return this.http.put(url + '/' + id, newData);
   }
 }
