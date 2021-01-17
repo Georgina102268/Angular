@@ -56,7 +56,6 @@ export class EditComponent implements OnInit, OnDestroy {
     this.subscribe = this.JSONPlaceholder.editData(this.albumID, this.id, this.title, this.url, this.thumbnailUrl).subscribe(x => {
       this.goBack();
     });
-    return this.subscribe;
   }
 
   goBack() {

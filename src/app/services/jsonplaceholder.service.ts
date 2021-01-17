@@ -13,7 +13,7 @@ export class JSONPlaceholderService {
   }
 
   getData(page: number): Observable<any> {
-    return this.http.get<any>(`http://jsonplaceholder.typicode.com/photos?_page=${page}&_limit=10`, { observe: 'response' })
+    return this.http.get<any>(`${this.url}?_page=${page}&_limit=10`, { observe: 'response' })
       .pipe(map(response => {
         return { totalRecords: response.headers.get('X-Total-Count'), data: response.body };
       }));
