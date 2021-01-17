@@ -20,7 +20,6 @@ export class EditComponent implements OnInit, OnDestroy{
   pageSubscribe: Subscription;
   page: number;
   constructor(private JSONPlaceholder: JSONPlaceholderService, private route: ActivatedRoute,  private router: Router) {
-    console.log('Edit Constructor '+this.id);
    }
   ngOnDestroy(): void {
     if (this.subscribe){      

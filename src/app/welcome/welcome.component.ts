@@ -32,7 +32,7 @@ export class WelcomeComponent implements OnInit, OnDestroy{
   }
   
 gotoDetails(id:number){
-  this.router.navigate(['/details/'+id])
+  this.router.navigate(['/details/'+id]);
 }
   getDataAPI(){
     if (this.subscribe){      
@@ -78,4 +78,11 @@ onChangePage(pageNumber: number) {
     this.router.navigate(['/edit/'+id], { relativeTo: this.route, queryParams: { page: page }});
   }
 
+  goToAdd(page: number){
+    this.router.navigate(['/add'], { relativeTo: this.route, queryParams: { page: page }});
+  }
+  
+  goToDetails(page: number, id:number){
+    this.router.navigate(['/details/'+id], { relativeTo: this.route, queryParams: { page: page }});
+  }
 }

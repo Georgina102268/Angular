@@ -1,6 +1,6 @@
 import { Component, OnInit, Input, OnDestroy } from '@angular/core';
 import { JSONPlaceholderService } from 'src/app/services/jsonplaceholder.service';
-import { ActivatedRoute} from '@angular/router';
+import { ActivatedRoute, Router} from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -16,7 +16,9 @@ export class DetailsComponent implements OnInit , OnDestroy{
   thumbnailUrl: String;
   item: any;
   subscribe: Subscription;
-  constructor(private JSONPlaceholder: JSONPlaceholderService, private route: ActivatedRoute) {
+  pageSubscribe: Subscription;
+  page: number;
+  constructor(private JSONPlaceholder: JSONPlaceholderService, private route: ActivatedRoute,  private router: Router) {
     console.log('Details Constructor '+this.id);
    }
   ngOnDestroy(): void {
@@ -24,19 +26,30 @@ export class DetailsComponent implements OnInit , OnDestroy{
       this.subscribe.unsubscribe();
       this.subscribe=null;
     }
+    if(this.pageSubscribe){
+      this.pageSubscribe.unsubscribe();
+      this.pageSubscribe=null;
+    }
   }
 
    ngOnInit(){
+    this.pageSubscribe=this.route.queryParams.subscribe(params => {
+      let paramPage = params.page;
+      if (paramPage){
+        this.page = paramPage;
+      }      
+  });
      this.id=+this.route.snapshot.paramMap.get('id');
-    console.log('Details Init '+this.id);
     this.subscribe=this.JSONPlaceholder.getItem(this.id).subscribe((x)=>{
-      this.item=x
-      this.albumID=x.albumId
-      this.title=x.title
-      this.url=x.url
-      this.thumbnailUrl=x.thumbnailUrl
-      console.log('Get Item')
+      this.item=x;
+      this.albumID=x.albumId;
+      this.title=x.title;
+      this.url=x.url;
+      this.thumbnailUrl=x.thumbnailUrl;
     })
    }
+   goBack(page: number){
+    this.router.navigate([''], { relativeTo: this.route, queryParams: { page: page }});
+  }
 
 }
